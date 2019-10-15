@@ -2,6 +2,7 @@ from flask import Flask
 from routes import api
 from flask_cors import CORS
 from config import Config
+from models import db
 
 
 def create_app():
@@ -9,6 +10,9 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = Config.SQL_ALCHEMY_DATABASE_URI
     CORS(api)
     app.register_blueprint(api)
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
     return app
 
 
