@@ -1,10 +1,12 @@
 from flask import Flask
-from app.routes import api
+from routes import api
 from flask_cors import CORS
+from config import Config
 
 
 def create_app():
     app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = Config.SQL_ALCHEMY_DATABASE_URI
     CORS(api)
     app.register_blueprint(api)
     return app

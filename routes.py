@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.utils import search_foursquare
+from utils import search_foursquare
 
 
 api = Blueprint("api", __name__)
