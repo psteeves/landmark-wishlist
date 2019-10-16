@@ -4,14 +4,19 @@
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 100px;
+  margin-bottom: 25px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 350px;
+  background-color: #422;
+  height: 150px;
   padding: 50px;
   color: white;
+}
+
+.Search-bar {
+  margin-top: 25px;
 }
 
 @keyframes App-logo-spin {
