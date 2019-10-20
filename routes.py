@@ -6,14 +6,6 @@ from models import db, User
 api = Blueprint("api", __name__)
 
 
-@api.route("/api/search_foursquare")
-def search():
-    near = request.args.get("near", "")
-    section = request.args.get("section", "")
-    results = search_foursquare(near, section)["response"]
-    return results
-
-
 @api.route("/api/users/<username>", methods=["GET", "POST", "DELETE"])
 def user(username):
     if request.method == "GET":
@@ -34,3 +26,8 @@ def user(username):
         db.session.commit()
 
     return str(user_row)
+
+
+@api.route("/api/add-locattion", method=["POST"])
+def add_location():
+    pass
