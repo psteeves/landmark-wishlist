@@ -24,4 +24,10 @@ class User(db.Model):
 
 class Venue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name: db.Column(db.String(1000), nullable=False)
+    address: db.Column(db.String(1000), nullable=False)
     city = db.Column(db.String(1000), nullable=False)
+    state: db.Column(db.String(1000), nullable=False)
+    postal_code: db.Column(db.String(1000), nullable=False)
+    country: db.Column(db.String(1000), nullable=False)
+    category: db.Column(db.String(1000), nullable=False)
