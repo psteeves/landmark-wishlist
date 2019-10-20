@@ -1,6 +1,5 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 
 
 export class SearchBar extends React.Component {

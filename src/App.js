@@ -2,6 +2,7 @@ import React from 'react';
 import logo from "../public/favicon.jpeg"
 import './App.css';
 import { SearchBar } from './components/SearchBar';
+import { LandmarksList } from "./components/LandmarksList";
 import { searchFourSquare, formatResults } from './utils'
 
 require('dotenv').config()
@@ -18,7 +19,6 @@ class App extends React.Component {
             response => {
                 const formattedResults = formatResults(response);
                 this.setState({landmarks: formattedResults});
-                console.log(this.state.landmarks);
             }
         );
     }
@@ -34,7 +34,7 @@ class App extends React.Component {
           <SearchBar search={this.search}/>
         </div>
           <div className="Landmark-results">
-              {this.state.landmarks.length ? "Results": "Nothing"}
+              <LandmarksList landmarks={this.state.landmarks} />
           </div>
       </div>
     );
