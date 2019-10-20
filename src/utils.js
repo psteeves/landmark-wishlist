@@ -1,11 +1,13 @@
-const endpoint = 'https://api.foursquare.com/v2/venues/explore';
-const clientId = process.env.REACT_APP_FS_CLIENT_ID
-const clientSecret = process.env.REACT_APP_FS_CLIENT_SECRET;
+const fourSquareEndpoint = 'https://api.foursquare.com/v2/venues/explore';
+const fourSquareClientId = process.env.REACT_APP_FS_CLIENT_ID
+const fourSquareClientSecret = process.env.REACT_APP_FS_CLIENT_SECRET;
+
+const backendEndPoint = 'http://localhost:5000';
 
 export const searchFourSquare = (near, section) => {
     const apiVersion = '20191014';
-    const url = `${endpoint}?client_id=${clientId}
-        &client_secret=${clientSecret}&near=${near}
+    const url = `${fourSquareEndpoint}?client_id=${fourSquareClientId}
+        &client_secret=${fourSquareClientSecret}&near=${near}
         &limit=10&v=${apiVersion}&section=${section}`;
     return fetch(url).then(
         response => response.json()
@@ -16,6 +18,22 @@ export const searchFourSquare = (near, section) => {
     )
 };
 
+export const addFavoriteLandmark = landmark => {
+    const url = `${backendEndPoint}/api/add-landmark`;
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:5000'
+        },
+        body: JSON.stringify(landmark)
+    }).then(
+        response => {
+            console.log(response);
+            return response.text();
+        }
+    )
+};
 
 export const formatResults = jsonResults => {
     return jsonResults.map(
