@@ -24,31 +24,37 @@ def user(username):
         db.session.delete(user_row)
         db.session.commit()
 
-    return str(user_row)
+    return user_row.username
 
 
-@api.route("/api/add-landmark", methods=["POST"])
-def add_location():
+@api.route("/api/user-landmark", methods=["POST", "DELETE"])
+def add_or_remove_location():
     location_data = request.get_json()
-    user_id = "pat2701"  # TODO remove hard coded user
-    landmark_row = Landmark(
-        id=location_data["id"],
-        name=location_data["name"],
-        address=location_data["address"],
-        city=location_data["city"],
-        state=location_data["state"],
-        postal_code=location_data["postalCode"],
-        country=location_data["country"],
-        category=location_data["category"],
-    )
-    new_landmark = Landmark.query.filter_by(id=landmark_row.id).scalar() is not None
-    if new_landmark:
-        db.session.add(landmark_row)
-        db.session.commit()
-
+    user_id = location_data["user_id"]
     user_row = User.query.filter_by(username=user_id).first_or_404()
-    user_row.landmarks.append(landmark_row)
 
-    db.session.add(user_row)
+    if request.method == "POST":
+        landmark_row = Landmark.query.filter_by(id=location_data["id"]).first()
+        if landmark_row is None:
+            landmark_row = Landmark(
+                id=location_data["id"],
+                name=location_data["name"],
+                address=location_data["address"],
+                city=location_data["city"],
+                state=location_data["state"],
+                postal_code=location_data["postalCode"],
+                country=location_data["country"],
+                category=location_data["category"],
+            )
+        user_row.landmarks.append(landmark_row)
+        db.session.add(user_row)
+
+    else:
+        try:
+            landmark_row = [l for l in user_row.landmarks if l.id == location_data["id"]][0]
+        except IndexError:
+            raise ValueError(f"Landmark with id {location_data['id']} not in user {user_id}\'s preferences")
+        user_row.landmarks.remove(landmark_row)
+
     db.session.commit()
-    return user_row.landmarks[-1].name
+    return landmark_row.name

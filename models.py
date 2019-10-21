@@ -5,9 +5,9 @@ db = SQLAlchemy()
 
 user_landmarks = db.Table(
     "user_landmarks",
-    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("user_id", db.ForeignKey("user.id"), primary_key=True),
     db.Column(
-        "landmark_id", db.Integer, db.ForeignKey("landmark.id"), primary_key=True
+        "landmark_id", db.ForeignKey("landmark.id"), primary_key=True
     ),
 )
 
