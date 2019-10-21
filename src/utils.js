@@ -18,8 +18,8 @@ export const searchFourSquare = (near, section) => {
     )
 };
 
-export const addFavoriteLandmark = landmark => {
-    const url = `${backendEndPoint}/api/add-landmark`;
+export const toggleFavoriteLandmark = landmark => {
+    const url = `${backendEndPoint}/api/user-landmark`;
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -29,9 +29,15 @@ export const addFavoriteLandmark = landmark => {
         body: JSON.stringify(landmark)
     }).then(
         response => {
-            console.log(response);
             return response.text();
         }
+    )
+};
+
+export const listFavorites = user_id => {
+    const url = `${backendEndPoint}/api/users/${user_id}`;
+    return fetch(url).then(
+        response => response.json()
     )
 };
 

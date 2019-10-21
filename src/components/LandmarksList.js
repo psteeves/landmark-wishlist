@@ -1,27 +1,27 @@
 import React from 'react';
 import { Landmark } from "./Landmark";
-import { addFavoriteLandmark } from "../utils";
+import { toggleFavoriteLandmark } from "../utils";
 
 
 export class LandmarksList extends React.Component {
     constructor(props) {
         super(props);
-        this.favoriteLandmark = this.favoriteLandmark.bind(this);
+        this.toggleLandmark = this.toggleLandmark.bind(this);
     }
-    favoriteLandmark(landmark) {
-        addFavoriteLandmark(landmark).then(
+
+    toggleLandmark(landmark) {
+        toggleFavoriteLandmark(landmark).then(
             response => {
                 console.log(`Added ${response} to favorites!`)
             }
         )
     }
     render() {
-        console.log(this.props.landmarks);
         let list;
         if (this.props.landmarks.length) {
             list = this.props.landmarks.map(
                 landmark => {
-                    return <Landmark favorite={this.favoriteLandmark} landmark={landmark} />
+                    return <Landmark favorite={this.toggleLandmark} landmark={landmark} />
                 }
             );
         } else {
