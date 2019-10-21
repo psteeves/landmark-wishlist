@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 from models import Landmark, User, db
 
@@ -11,6 +11,8 @@ def user(username):
         user_row = User.query.filter_by(username=username).first_or_404(
             description=f"No user with username {username} found"
         )
+        user_landmarks = [l.as_dict() for l in user_row.landmarks]
+        return jsonify(landmarks=user_landmarks)
 
     elif request.method == "POST":
         user_row = User(username=username)
@@ -55,6 +57,7 @@ def add_or_remove_location():
         except IndexError:
             raise ValueError(f"Landmark with id {location_data['id']} not in user {user_id}\'s preferences")
         user_row.landmarks.remove(landmark_row)
+        db.session.add(user_row)
 
     db.session.commit()
     return landmark_row.name

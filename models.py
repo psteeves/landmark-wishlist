@@ -35,3 +35,8 @@ class Landmark(db.Model):
 
     def __repr__(self):
         return f"<Landmark {self.name}>"
+
+    def as_dict(self):
+        state = self.__dict__
+        state.pop("_sa_instance_state")
+        return state
