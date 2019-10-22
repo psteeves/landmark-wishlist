@@ -18,10 +18,11 @@ export const searchFourSquare = (near, section) => {
     )
 };
 
-export const toggleFavoriteLandmark = landmark => {
+export const toggleFavoriteLandmark = (landmark, method) => {
     const url = `${backendEndPoint}/api/user-landmark`;
+    landmark.user_id = 'pat2701';
     return fetch(url, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': 'http://localhost:5000'
@@ -33,6 +34,7 @@ export const toggleFavoriteLandmark = landmark => {
         }
     )
 };
+
 
 export const listFavorites = user_id => {
     const url = `${backendEndPoint}/api/users/${user_id}`;
