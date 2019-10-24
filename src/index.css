@@ -1,15 +1,20 @@
 ul {
   list-style-type: none;
+}
+
+ul.Router-links {
+  list-style-type: none;
   color: #003350;
   display: inline-flex;
   justify-content: flex-start;
 }
 
-h1 {
+h1, h2, h3 {
   margin: 10px;
+  text-align: center;
 }
 
-li {
+li.Router-link {
   margin-right: 10px;
 }
 
@@ -17,5 +22,5 @@ li {
   text-align: center;
   background-color: #DEB887;
   height: 100px;
-  color: #8b3601;
+  color: #003350;;
 }

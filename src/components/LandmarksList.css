@@ -1,6 +1,12 @@
-.LandmarksList {
+.Landmarks-list {
   display: inline-flex;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 
+h3.Landmarks-list-title {
+  color: #9d3b39;
+  text-align: left;
+  margin-left: 80px;
+  margin-top: 50px;
+}

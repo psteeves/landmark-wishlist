@@ -11,7 +11,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             landmarks: [],
-            userFavorites: []
+            userFavorites: [],
+            location: undefined
         };
         this.search = this.search.bind(this);
         this.checkLandmarkStatus = this.checkLandmarkStatus.bind(this);
@@ -28,7 +29,7 @@ class App extends React.Component {
                         return copy;
                     }
                 );
-                this.setState({landmarks: formattedResults});
+                this.setState({landmarks: formattedResults, location: location});
             }
         );
     }
@@ -79,7 +80,7 @@ class App extends React.Component {
           <SearchBar search={this.search}/>
         </div>
           <div className="Landmark-results">
-              <LandmarksList landmarks={this.state.landmarks} onClick={this.toggleLandmark}/>
+              <LandmarksList title={this.state.location? `Places in ${this.state.location}`: ''} landmarks={this.state.landmarks} onClick={this.toggleLandmark}/>
           </div>
       </div>
     );

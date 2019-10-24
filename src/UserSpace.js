@@ -33,15 +33,36 @@ class UserSpace extends React.Component {
 
     render() {
         let addLandmarksPrompt;
+        let landmarksByCityList;
+
         if (this.state.landmarks.length) {
-            addLandmarksPrompt = ''
+            addLandmarksPrompt = '';
+	        const landmarksByCity = this.state.landmarks.reduce((groups, element) => {
+	        const city = element.city;
+	        if (!groups.hasOwnProperty(city)) {
+	            groups[city] = []
+	        }
+	        groups[city].push(element);
+	        return groups;
+	        }, {});
+
+	        console.log(landmarksByCity);
+	        landmarksByCityList = Object.keys(landmarksByCity).map(
+	        city => {
+	            return <li><LandmarksList title={city} landmarks={landmarksByCity[city]} onClick={this.unFavoriteLandmark}/></li>
+	        }
+            )
+
         } else {
             addLandmarksPrompt = <h3>You haven't favorited any landmarks yet...</h3>
+            landmarksByCityList = [];
         }
         return (
             <div className="User-list">
-              <h1>Your Places</h1>
-                <LandmarksList landmarks={this.state.landmarks} onClick={this.unFavoriteLandmark}/>
+              <h2>Your Places</h2>
+                <ul className="Landmarks-list-by-city">
+                    {landmarksByCityList}
+                </ul>
                 {addLandmarksPrompt}
             </div>
         )

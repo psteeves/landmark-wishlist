@@ -11,11 +11,11 @@ require('dotenv').config();
 const routing = (
   <Router>
     <div className="Router">
-      <ul>
-        <li>
+      <ul className="Router-links">
+        <li className="Router-link">
           <Link to="/">Home</Link>
         </li>
-        <li>
+        <li className="Router-link">
           <Link to="/account">Account</Link>
         </li>
       </ul>

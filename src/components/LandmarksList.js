@@ -14,6 +14,11 @@ export class LandmarksList extends React.Component {
         } else {
             list = []
         }
-        return <ul className="LandmarksList">{list}</ul>
+        return (
+            <div>
+                <h3 className="Landmarks-list-title">{this.props.title}</h3>
+                <ul className="Landmarks-list">{list}</ul>
+            </div>
+        )
     }
 }
