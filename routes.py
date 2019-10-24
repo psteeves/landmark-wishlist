@@ -44,7 +44,7 @@ def add_or_remove_location():
                 address=location_data["address"],
                 city=location_data["city"],
                 state=location_data["state"],
-                postal_code=location_data["postalCode"],
+                postal_code=location_data.get("postalCode", ""),
                 country=location_data["country"],
                 category=location_data["category"],
             )
