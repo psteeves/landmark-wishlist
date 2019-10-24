@@ -1,4 +1,5 @@
 import React from 'react';
+import './SearchBar.css';
 import { TextField, Button } from '@material-ui/core';
 
 
@@ -24,7 +25,9 @@ export class SearchBar extends React.Component {
             <React.Fragment>
               <TextField onChange={this.handleChange} style={{width: 500}} variant="outlined" placeholder="Search by Location"/>
               <br/>
-              <Button variant="contained" onClick={this.handleSearch}>Search</Button>
+              <div className="Search-button">
+                <Button variant="contained" onClick={this.handleSearch}>Search</Button>
+              </div>
             </React.Fragment>
         );
     }

@@ -3,6 +3,7 @@ const fourSquareClientId = process.env.REACT_APP_FS_CLIENT_ID
 const fourSquareClientSecret = process.env.REACT_APP_FS_CLIENT_SECRET;
 
 const backendEndPoint = 'http://localhost:5000';
+export const hardCodedUser = 'pat2701';
 
 export const searchFourSquare = (near, section) => {
     const apiVersion = '20191014';

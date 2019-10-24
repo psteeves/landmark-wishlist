@@ -1,13 +1,10 @@
 import React from 'react';
-import logo from "../public/favicon.jpeg"
 import './App.css';
 import { SearchBar } from './components/SearchBar';
 import { LandmarksList } from "./components/LandmarksList";
 import {searchFourSquare, formatResults, listFavorites, toggleFavoriteLandmark} from './utils'
+import { hardCodedUser } from "./utils";
 
-require('dotenv').config()
-
-const user = "pat2701";
 
 class App extends React.Component {
     constructor(props) {
@@ -37,11 +34,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.getUserFavorites(user);
-    }
-
-    getUserFavorites(user) {
-        listFavorites(user).then(
+        listFavorites(hardCodedUser).then(
             favorites => {
                 this.setState({userFavorites: favorites.landmarks})
             }
@@ -82,15 +75,11 @@ class App extends React.Component {
     render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img className="App-logo" src={logo} alt="logo" />
-          <h2>Welcome to the Landmark WishList!</h2>
-        </div>
         <div className="Search-bar">
           <SearchBar search={this.search}/>
         </div>
           <div className="Landmark-results">
-              <LandmarksList landmarks={this.state.landmarks} toggleLandmark={this.toggleLandmark}/>
+              <LandmarksList landmarks={this.state.landmarks} onClick={this.toggleLandmark}/>
           </div>
       </div>
     );

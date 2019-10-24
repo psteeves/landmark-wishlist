@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Button } from '@material-ui/core';
+import './Landmark.css';
 
 export class Landmark extends React.Component {
     constructor(props) {
@@ -8,12 +9,13 @@ export class Landmark extends React.Component {
     }
 
     handleClick(e) {
-        this.props.toggleLandmark(this.props.landmark);
+        this.props.onClick(this.props.landmark);
         e.preventDefault();
     }
 
     render() {
         return (
+            <div className="Landmark-card">
             <Card>
                 <CardContent>
                     <Typography>
@@ -22,9 +24,10 @@ export class Landmark extends React.Component {
                     <Typography>
                         {this.props.landmark.address}<br/>{this.props.landmark.city}, {this.props.landmark.state} {this.props.landmark.postalCode}
                     </Typography>
-                    <Button href="#" variant="contained" onClick={this.handleClick}>{this.props.landmark.isFavorite? 'Unfavorite': 'Favorite'}</Button>
+                    <div className="Favorite-button"><Button href="#" variant="contained" onClick={this.handleClick}>{this.props.landmark.isFavorite? 'Unfavorite': 'Favorite'}</Button></div>
                 </CardContent>
             </Card>
+            </div>
         )
     }
 }
