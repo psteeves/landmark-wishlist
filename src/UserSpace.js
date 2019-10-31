@@ -46,7 +46,6 @@ class UserSpace extends React.Component {
 	        return groups;
 	        }, {});
 
-	        console.log(landmarksByCity);
 	        landmarksByCityList = Object.keys(landmarksByCity).map(
 	        city => {
 	            return <li><LandmarksList title={city} landmarks={landmarksByCity[city]} onClick={this.unFavoriteLandmark}/></li>

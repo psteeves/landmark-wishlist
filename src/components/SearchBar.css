@@ -1,3 +1,10 @@
 .Search-button {
   margin-top: 5px;
 }
+
+.Search-section {
+  margin-top: 5px;
+  text-align: center;
+  display: inline-block;
+
+}

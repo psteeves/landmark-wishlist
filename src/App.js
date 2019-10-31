@@ -19,8 +19,8 @@ class App extends React.Component {
         this.toggleLandmark = this.toggleLandmark.bind(this);
     }
 
-    search(location) {
-        searchFourSquare(location, 'food').then(
+    search(location, section) {
+        searchFourSquare(location, section).then(
             response => {
                 const formattedResults = formatResults(response).map(
                     res => {
