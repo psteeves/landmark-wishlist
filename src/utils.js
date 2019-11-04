@@ -1,15 +1,16 @@
 const fourSquareEndpoint = 'https://api.foursquare.com/v2/venues/explore';
-const fourSquareClientId = process.env.REACT_APP_FS_CLIENT_ID
+const fourSquareClientId = process.env.REACT_APP_FS_CLIENT_ID;
 const fourSquareClientSecret = process.env.REACT_APP_FS_CLIENT_SECRET;
+import { AuthService } from "./AuthService";
 
-const backendEndPoint = 'http://localhost:5000';
-export const hardCodedUser = 'pat2701';
+export const backendEndPoint = 'http://localhost:5000';
+
 
 export const searchFourSquare = (near, section) => {
     const apiVersion = '20191014';
     const url = `${fourSquareEndpoint}?client_id=${fourSquareClientId}
         &client_secret=${fourSquareClientSecret}&near=${near}
-        &limit=10&v=${apiVersion}&section=${section}`;
+        &limit=20&v=${apiVersion}&section=${section}`;
     return fetch(url).then(
         response => response.json()
     ).then(
@@ -20,29 +21,46 @@ export const searchFourSquare = (near, section) => {
 };
 
 export const toggleFavoriteLandmark = (landmark, method) => {
-    const url = `${backendEndPoint}/api/user-landmark`;
-    landmark.user_id = 'pat2701';
-    return fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost:5000'
-        },
-        body: JSON.stringify(landmark)
-    }).then(
-        response => {
-            return response.text();
+    return AuthService.checkLoginStatus().then(
+        token => {
+            const url = `${backendEndPoint}/api/user-landmark`;
+            return fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': backendEndPoint,
+                    'Authorization': `JWT ${token}`
+                },
+                body: JSON.stringify(landmark)
+            }).then(
+                response => {
+                    return response.text();
+                }
+            )
         }
     )
 };
 
-
-export const listFavorites = user_id => {
-    const url = `${backendEndPoint}/api/users/${user_id}`;
-    return fetch(url).then(
-        response => response.json()
-    )
+export const listFavorites = () => {
+    return AuthService.checkLoginStatus().then(
+        token => {
+            const url = `${backendEndPoint}/api/user/`;
+            return fetch(url, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': backendEndPoint,
+                        'Authorization': `JWT ${token}`
+                    }
+                }
+            )
+        }
+        ).then(
+            response => {
+                return response.json()
+            }
+            )
 };
+
 
 export const formatResults = jsonResults => {
     return jsonResults.map(

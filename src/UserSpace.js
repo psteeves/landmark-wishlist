@@ -1,5 +1,5 @@
 import React from 'react';
-import { hardCodedUser, listFavorites, toggleFavoriteLandmark } from "./utils";
+import { listFavorites, toggleFavoriteLandmark } from "./utils";
 import { LandmarksList } from "./components/LandmarksList";
 import './UserSpace.css';
 
@@ -11,7 +11,7 @@ class UserSpace extends React.Component {
     }
 
     componentDidMount() {
-        listFavorites(hardCodedUser).then(
+        listFavorites().then(
             response => {
                 let landmarks = response.landmarks;
                 landmarks.forEach(lm => {lm.isFavorite = true});

@@ -1,0 +1,9 @@
+.Switch-auth {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.Error-message {
+    text-align: center;
+    color: red;
+}

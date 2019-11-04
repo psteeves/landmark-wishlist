@@ -1,35 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
-import App from './App';
-import UserSpace from './UserSpace.js';
-import NotFound from './NotFound.js';
-import './index.css';
+import { NavBar } from "./NavBar";
+import { AuthService } from "./AuthService";
 
-require('dotenv').config();
+// require('dotenv').config();
 
-const routing = (
-  <Router>
-    <div className="Router">
-      <ul className="Router-links">
-        <li className="Router-link">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="Router-link">
-          <Link to="/account">Account</Link>
-        </li>
-      </ul>
-      <h1>Landmark WishList</h1>
-      </div>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/account" component={UserSpace} />
-        <Route component={NotFound} />
-      </Switch>
-  </Router>
-);
+class Routing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {loggedIn: false};
+    this.toggleLogInStatus = this.toggleLogInStatus.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    AuthService.checkLoginStatus().then(
+        token => {
+          const status = !!token;
+          this.setState({loggedIn: status});
+        }
+    )
+  }
+
+  toggleLogInStatus() {
+    this.setState(prevState => ({loggedIn: !prevState.loggedIn}))
+  }
+
+  logout() {
+    AuthService.logOut();
+    this.setState({loggedIn: false});
+    console.log('Logged out!');
+  }
+
+  render() {
+    return <NavBar loggedIn={this.state.loggedIn} toggleLogInStatus={this.toggleLogInStatus} logout={this.logout}/>
+  }
+}
 
 ReactDOM.render(
-  routing,
+  <Routing />,
   document.getElementById('root')
 );

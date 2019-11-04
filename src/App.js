@@ -3,7 +3,6 @@ import './App.css';
 import { SearchBar } from './components/SearchBar';
 import { LandmarksList } from "./components/LandmarksList";
 import {searchFourSquare, formatResults, listFavorites, toggleFavoriteLandmark} from './utils'
-import { hardCodedUser } from "./utils";
 
 
 class App extends React.Component {
@@ -35,7 +34,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        listFavorites(hardCodedUser).then(
+        listFavorites().then(
             favorites => {
                 this.setState({userFavorites: favorites.landmarks})
             }
