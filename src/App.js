@@ -25,6 +25,7 @@ class App extends React.Component {
                     res => {
                         const copy = Object.assign({}, res);
                         copy.isFavorite = this.checkLandmarkStatus(res);
+                        copy.category = section;
                         return copy;
                     }
                 );

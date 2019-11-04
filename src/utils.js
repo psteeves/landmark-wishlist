@@ -73,7 +73,6 @@ export const formatResults = jsonResults => {
                 state: landmark.venue.location.state,
                 postalCode: landmark.venue.location.postalCode,
                 country: landmark.venue.location.country,
-                category: landmark.venue.categories.filter(category => category.primary)[0].name,
             }
         }
     )

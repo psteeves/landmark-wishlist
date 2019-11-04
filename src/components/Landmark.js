@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Button } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography, Button } from '@material-ui/core';
 import './Landmark.css';
 
 export class Landmark extends React.Component {
@@ -14,9 +14,18 @@ export class Landmark extends React.Component {
     }
 
     render() {
+        const image_path = `./${this.props.landmark.category}_landmark_pic.jpeg`;
         return (
             <div className="Landmark-card">
             <Card>
+                <CardMedia
+                  component="img"
+                  alt="Landmark Image"
+                  height="140"
+                  image={require (image_path)}
+                  title="Landmark Image"
+                  style={{ height: 80, paddingTop: '0%'}}
+                />
                 <CardContent>
                     <Typography>
                         {this.props.landmark.name}
