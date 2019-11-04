@@ -1,39 +1,41 @@
 from flask import Blueprint, request, jsonify
-
+from flask_jwt import jwt_required, current_identity
 from models import Landmark, User, db
+
 
 api = Blueprint("api", __name__)
 
 
-@api.route("/api/users/<username>", methods=["GET", "POST", "DELETE"])
-def user(username):
+@api.route("/api/register", methods=["POSt"])
+def register():
+    user_info = request.get_json()
+    user_row = User(username=user_info["username"])
+    user_row.set_password(user_info["password"])
+    db.session.add(user_row)
+    db.session.commit()
+    return jsonify(username=user_info["username"])
+
+
+@api.route("/api/user/", methods=["GET", "DELETE"])
+@jwt_required()
+def user():
+    user_row = current_identity
     if request.method == "GET":
-        user_row = User.query.filter_by(username=username).first_or_404(
-            description=f"No user with username {username} found"
-        )
         user_landmarks = [l.as_dict() for l in user_row.landmarks]
         return jsonify(landmarks=user_landmarks)
 
-    elif request.method == "POST":
-        user_row = User(username=username)
-        db.session.add(user_row)
-        db.session.commit()
-
     else:
-        user_row = User.query.filter_by(username=username).first_or_404(
-            description=f"No user with username {username} found"
-        )
         db.session.delete(user_row)
         db.session.commit()
 
-    return user_row.username
+    return jsonify(username=user_row.username)
 
 
 @api.route("/api/user-landmark", methods=["POST", "DELETE"])
+@jwt_required()
 def add_or_remove_location():
+    user_row = current_identity
     location_data = request.get_json()
-    user_id = location_data["user_id"]
-    user_row = User.query.filter_by(username=user_id).first_or_404()
 
     if request.method == "POST":
         landmark_row = Landmark.query.filter_by(id=location_data["id"]).first()
@@ -52,10 +54,7 @@ def add_or_remove_location():
         db.session.add(user_row)
 
     else:
-        try:
-            landmark_row = [l for l in user_row.landmarks if l.id == location_data["id"]][0]
-        except IndexError:
-            raise ValueError(f"Landmark with id {location_data['id']} not in user {user_id}\'s preferences")
+        landmark_row = [l for l in user_row.landmarks if l.id == location_data["id"]][0]
         user_row.landmarks.remove(landmark_row)
         db.session.add(user_row)
 
