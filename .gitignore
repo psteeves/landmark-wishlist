@@ -1,8 +1,6 @@
-.env
+**/.env
 **/.idea
 **/__pycache__
-webapp/*.sqlite
-/node_modules
-/coverage
-/production
-**/.idea
+*.sqlite
+webapp/node_modules
+webapp/package-lock.json

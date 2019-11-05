@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { NavBar } from "./NavBar";
 import { AuthService } from "./AuthService";
 
-// require('dotenv').config();
+require('dotenv').config();
 
 class Routing extends React.Component {
   constructor(props) {
