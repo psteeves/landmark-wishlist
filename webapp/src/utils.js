@@ -3,9 +3,11 @@ const fourSquareClientId = process.env.REACT_APP_FS_CLIENT_ID;
 const fourSquareClientSecret = process.env.REACT_APP_FS_CLIENT_SECRET;
 import { AuthService } from "./AuthService";
 
+// Port to communicate with backend
 export const backendEndPoint = 'http://localhost:5000';
 
 
+// Get results from FourSquare API
 export const searchFourSquare = (near, section) => {
     const apiVersion = '20191014';
     const url = `${fourSquareEndpoint}?client_id=${fourSquareClientId}
@@ -18,11 +20,12 @@ export const searchFourSquare = (near, section) => {
             return jsonResponse.response.groups[0].items
         }
     ).catch(error => {
-        console.log("An error occurred during the search")
+        console.log("An error occurred during the search");
         return []
     })
 };
 
+// Add or remove landmark from favorite, depending on the method specified (POST or DELETE)
 export const toggleFavoriteLandmark = (landmark, method) => {
     return AuthService.checkLoginStatus().then(
         token => {
@@ -44,6 +47,8 @@ export const toggleFavoriteLandmark = (landmark, method) => {
     )
 };
 
+
+// Get a user's previously favorited landmarks
 export const listFavorites = () => {
     return AuthService.checkLoginStatus().then(
         token => {
@@ -65,6 +70,7 @@ export const listFavorites = () => {
 };
 
 
+// Format FoursSquare API results to cleaner format
 export const formatResults = jsonResults => {
     return jsonResults.map(
         landmark => {

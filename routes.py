@@ -20,10 +20,12 @@ def register():
 @jwt_required()
 def user():
     user_row = current_identity
+    # List all of user's favorite landmarks
     if request.method == "GET":
         user_landmarks = [l.as_dict() for l in user_row.landmarks]
         return jsonify(landmarks=user_landmarks)
 
+    # Delete user
     else:
         db.session.delete(user_row)
         db.session.commit()
@@ -37,9 +39,11 @@ def add_or_remove_location():
     user_row = current_identity
     location_data = request.get_json()
 
+    # Add favorite landmark
     if request.method == "POST":
-        landmark_row = Landmark.query.filter_by(id=location_data["id"]).first()
+        landmark_row = Landmark.query.filter_by(id=location_data["id"]).first()  # Check if landmark already in DB
         if landmark_row is None:
+            # All fields except postal code are required
             landmark_row = Landmark(
                 id=location_data["id"],
                 name=location_data["name"],
@@ -53,6 +57,7 @@ def add_or_remove_location():
         user_row.landmarks.append(landmark_row)
         db.session.add(user_row)
 
+    # Delete landmark from favorites
     else:
         landmark_row = [l for l in user_row.landmarks if l.id == location_data["id"]][0]
         user_row.landmarks.remove(landmark_row)

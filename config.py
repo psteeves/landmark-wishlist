@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv()  # Export JWT secret as environment variable
+
 
 class Config:
     SQL_ALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
