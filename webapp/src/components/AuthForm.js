@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +9,7 @@ import './AuthForm.css';
 export class AuthForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', error_message: ''};
+        this.state = {username: '', password: '', error_message: '', success: false};
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -57,7 +58,8 @@ export class AuthForm extends React.Component {
                         if (this.props.purpose === 'register') {
                             this.props.switchAuth();
                         } else {
-                            console.log('Logged in!')
+                            console.log('Logged in!');
+                            this.setState({success: true})
                         }
                     }
                 }
@@ -71,53 +73,58 @@ export class AuthForm extends React.Component {
     }
 
     render() {
-        return (
-            <Container component="main" maxWidth="xs">
-                <Typography component="h1" variant="h5">
-                    {this.props.purpose === 'login'? 'Sign in': 'Register'}
-                </Typography>
-                <form noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        onChange={this.handleUsernameChange}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        onChange={this.handlePasswordChange}
-                    />
-                    <Button
-                        type="submit"
-                        href="#"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleClick}
-                    >
-                        {this.props.purpose==='register'? 'Register': 'Login'}
-                    </Button>
-                    <div className="Error-message">
-                    <Typography>{this.state.error_message}</Typography>
+        const success = this.state.success;
+        if (success) {
+            return <Redirect to={"/"}/>
+        } else {
+            return (
+                <Container component="main" maxWidth="xs">
+                    <Typography component="h1" variant="h5">
+                        {this.props.purpose === 'login' ? 'Sign in' : 'Register'}
+                    </Typography>
+                    <form noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            onChange={this.handleUsernameChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            onChange={this.handlePasswordChange}
+                        />
+                        <Button
+                            type="submit"
+                            href="#"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleClick}
+                        >
+                            {this.props.purpose === 'register' ? 'Register' : 'Login'}
+                        </Button>
+                        <div className="Error-message">
+                            <Typography>{this.state.error_message}</Typography>
+                        </div>
+                    </form>
+                    <div className="Switch-auth">
+                        <Button size="small" href="#" onClick={this.handleSwitchPurpose}>
+                            {this.props.purpose === 'register' ? 'Already have an account? Login!' : 'Need to register?'}
+                        </Button>
                     </div>
-                </form>
-                <div className="Switch-auth">
-                <Button size="small" href="#" onClick={this.handleSwitchPurpose}>
-                    {this.props.purpose==='register'? 'Already have an account? Login!': 'Need to register?'}
-                </Button>
-                </div>
-            </Container>
-        );
+                </Container>
+            );
+        }
     };
 }

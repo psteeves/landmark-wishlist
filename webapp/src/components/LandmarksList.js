@@ -8,7 +8,7 @@ export class LandmarksList extends React.Component {
         if (this.props.landmarks.length) {
             list = this.props.landmarks.map(
                 landmark => {
-                    return <li><Landmark key={landmark.id} onClick={this.props.onClick} landmark={landmark}/></li>
+                    return <li key={landmark.id}><Landmark key={landmark.id} onClick={this.props.onClick} landmark={landmark}/></li>
                 }
             );
         } else {

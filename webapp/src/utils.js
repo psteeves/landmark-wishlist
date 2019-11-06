@@ -17,7 +17,10 @@ export const searchFourSquare = (near, section) => {
         jsonResponse => {
             return jsonResponse.response.groups[0].items
         }
-    )
+    ).catch(error => {
+        console.log("An error occurred during the search")
+        return []
+    })
 };
 
 export const toggleFavoriteLandmark = (landmark, method) => {

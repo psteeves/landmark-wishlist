@@ -17,10 +17,8 @@ export class NavBar extends React.Component {
   }
 
   render() {
-    return (
-        <Router>
-          <div className="Router">
-            <ul className="Router-links">
+    const loggedInLinks = (
+        <ul className="Router-links">
               <li className="Router-link">
                 <Link to="/">Travel</Link>
               </li>
@@ -28,12 +26,21 @@ export class NavBar extends React.Component {
                 <Link to="/account">Account</Link>
               </li>
               <li className="Router-link">
-                <Link to="/authenticate">Authentication</Link>
-              </li>
-              <li className="Router-link">
                 <Link to="/logout">Logout</Link>
               </li>
-            </ul>
+        </ul>
+    );
+    const loggedOutLinks = (
+        <ul className="Router-links">
+          <li className="Router-link">
+            <Link to="/authenticate">Authentication</Link>
+          </li>
+        </ul>
+    );
+    return (
+        <Router>
+          <div className="Router">
+            {this.props.loggedIn? loggedInLinks: loggedOutLinks}
             <h1>Landmark WishList</h1>
           </div>
           <Switch>
