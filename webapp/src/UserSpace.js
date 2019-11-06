@@ -48,12 +48,12 @@ class UserSpace extends React.Component {
 
 	        landmarksByCityList = Object.keys(landmarksByCity).map(
 	        city => {
-	            return <li><LandmarksList title={city} landmarks={landmarksByCity[city]} onClick={this.unFavoriteLandmark}/></li>
+	            return <li key={city}><LandmarksList title={city} landmarks={landmarksByCity[city]} onClick={this.unFavoriteLandmark}/></li>
 	        }
             )
 
         } else {
-            addLandmarksPrompt = <h3>You haven't favorited any landmarks yet...</h3>
+            addLandmarksPrompt = <h3>You haven't favorited any landmarks yet...</h3>;
             landmarksByCityList = [];
         }
         return (
