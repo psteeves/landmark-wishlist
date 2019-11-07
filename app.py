@@ -17,7 +17,7 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
-    CORS(app, origins="http://localhost:3000")
+    CORS(app, origins="http://localhost:3000")  # Allow cross origin requests from React frontend
     return app
 
 
